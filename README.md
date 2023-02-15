@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Working Link to the website
 
-[My Dashboard](https://dashboardsync-by-vadym.netlify.app/ecommerce)
+[My Dashboard](https://dashboardsync-by-vadym.netlify.app)
 
 ## How to start project?
 
@@ -20,15 +20,15 @@ In the project directory, you can run:
 
 This dashboard has different apps:
 
-- [Calendar](https://dashboardsync-by-vadym.netlify.app/calendar)
-- [Kanban](https://dashboardsync-by-vadym.netlify.app/kanban)
-- [Editor](https://dashboardsync-by-vadym.netlify.app/editor)
-- [Color-Picker](https://dashboardsync-by-vadym.netlify.app/color-picker)
+- Calendar
+- Kanban
+- Editor
+- Color-Picker
 
 Charts:
 
-- [Line](https://dashboardsync-by-vadym.netlify.app/line)
-- [Area](https://dashboardsync-by-vadym.netlify.app/area)
+- Line
+- Area
 
 Theme Options:
 
