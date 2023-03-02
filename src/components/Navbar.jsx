@@ -6,9 +6,10 @@ import { RiNotification3Line } from 'react-icons/ri'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { TooltipComponent } from '@syncfusion/ej2-react-popups'
 
-import avatar from '../data/avatar.jpg'
+import avatar from '../data/myAvatar.jpg'
 import { Cart, Chat, Notification, UserProfile} from '.'
 import { useStateContext } from '../contexts/ContextProvider'
+import { useState } from 'react'
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <TooltipComponent content={title} position="BottomCenter">
@@ -24,6 +25,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 
 const Navbar = () => {
   const { activeMenu, setActiveMenu, isClicked, setIsClicked, handleClick, screenSize, setScreenSize, currentColor } = useStateContext();
+  const [userActive, setUserActive] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -42,50 +44,55 @@ const Navbar = () => {
   }, [screenSize]);
 
   return (
-    <div className='flex justify-between p-2 md:mx-6 relative'>
-      <NavButton title="Menu" customFunc={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)} color={currentColor} icon={<AiOutlineMenu/>}/>
+    <div>
+      <div className='flex justify-between p-2 md:mx-6 relative'>
+        <NavButton title="Menu" customFunc={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)} color={currentColor} icon={<AiOutlineMenu/>}/>
 
-      <div className='flex'>
-        <NavButton 
-          title="Cart" 
-          customFunc={() => handleClick('cart')} 
-          color={currentColor}
-          icon={<FiShoppingCart/>} 
-        />
-        <NavButton 
-          title="Chat" 
-          dotColor="#03C9D7"
-          customFunc={() => handleClick('chat')} 
-          color={currentColor}
-          icon={<BsChatLeft />} 
-        />
-        <NavButton 
-          title="Notifications" 
-          dotColor="#03C9D7"
-          customFunc={() => handleClick('notification')} 
-          color={currentColor} 
-          icon={<RiNotification3Line />} 
-        />
-        <TooltipComponent
-          content="Profile"
-          position='BottomCenter'>
-            <div className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
-            onClick={() => handleClick('user')}>
-              <img className='rounded-full 2-8 h-8' src={avatar} alt="" />
-              <p>
-                <span className='text-gray-400 text-14'>Hi, </span> {'  '}
-                <span className='text-gray-400 font-bold ml-1 text-14'>Michael</span>
-              </p>
-              <MdKeyboardArrowDown 
-              className='text-gray-400 text-14'/>
-            </div>
-        </TooltipComponent>
-
-        {isClicked.cart && <Cart />}
-        {isClicked.chat && <Chat />}
-        {isClicked.notification && <Notification />}
-        {isClicked.UserProfile && <UserProfile />}
+        <div className='flex'>
+          <NavButton 
+            title="Cart" 
+            customFunc={() => setIsClicked(prev => ({ ...prev, chat: false, cart: !prev.cart, notification: false, useProfile: false }))} // Для закриття компонента після другого натискання
+            color={currentColor}
+            icon={<FiShoppingCart/>} 
+          />
+          <NavButton 
+            title="Chat" 
+            dotColor="#03C9D7"
+            customFunc={() => setIsClicked(prev => ({ ...prev, chat: !prev.chat, cart: false, notification: false, useProfile: false }))} 
+            color={currentColor}
+            icon={<BsChatLeft />} 
+          />
+          <NavButton 
+            title="Notifications" 
+            dotColor="#03C9D7"
+            customFunc={() => setIsClicked(prev => ({ ...prev, chat: false, cart: false, notification: !prev.notification, useProfile: false }))} 
+            color={currentColor} 
+            icon={<RiNotification3Line />} 
+          />
+          <TooltipComponent
+            content="Profile"
+            position='BottomCenter'>
+              <div className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
+              onClick={() => { // handleClick('useProfile'); 
+                setIsClicked(prev => ({ ...prev, chat: false, cart: false, notification: false, useProfile: !prev.useProfile }))
+              }}>
+                <img className='rounded-full w-8 h-8' src={avatar} alt="" />
+                <p>
+                  <span className='text-gray-400 text-14'>Hi, </span> 
+                  <span className='text-gray-400 font-bold ml-1 text-14'>Vadym</span>
+                </p>
+                <MdKeyboardArrowDown 
+                className='text-gray-400 text-14'/>
+              </div>
+          </TooltipComponent>
+        </div>
       </div>
+        
+          {isClicked.cart && <Cart />}
+          {isClicked.chat && <Chat />}
+          {isClicked.notification && <Notification />}
+          {isClicked.useProfile && <UserProfile />}
+      
     </div>
   )
 }

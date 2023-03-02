@@ -41,7 +41,11 @@ module.exports = {
         backgroundImage: {
           'hero-pattern':
             "url('/src/data/welcome-bg.svg')",
-        },
+        }, 
+        // inset for the top, right, bottom, and left properties
+        inset: {
+          '60px': '60px',
+        }
       },
     },
     plugins: [],
